@@ -5,14 +5,14 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
   mode: 'development',
   entry: {
-    main: path.resolve(__dirname, '../src/main.js')
+    app: path.resolve(__dirname, '../src/main.js')
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].[hash:8].js',
     // 关于chunk： https://blog.csdn.net/weixin_40851188/article/details/89888822
     chunkFilename: 'js/[name].[hash:8].js',
-    publicPath: './'
+    publicPath: '/'
   },
 
   resolve: {
@@ -126,7 +126,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
     new VueLoaderPlugin()
   ]
 }
