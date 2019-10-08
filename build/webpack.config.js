@@ -76,10 +76,10 @@ module.exports = {
         test: /\.(jpe?g|png|gif)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'url-loader', // 转成base-64 URL
             options: {
               limit: 4096,
-              fallback: {
+              fallback: { // 超出limit之后使用file-loader进行处理
                 loader: 'file-loader',
                 options: {
                   name: 'img/[name].[hash:8].[ext]'
@@ -99,6 +99,7 @@ module.exports = {
               fallback: {
                 loader: 'file-loader',
                 options: {
+                  // 这些媒体资源中不能使用chunkhash进行打包(只能用hash进行打包)，chunkhash只适用于js文件中
                   name: 'media/[name].[hash:8].[ext]'
                 }
               }
