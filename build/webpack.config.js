@@ -9,9 +9,9 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'js/[name].[hash:8].js',
+    filename: 'js/[name].[chunkhash:8].js',
     // 关于chunk： https://blog.csdn.net/weixin_40851188/article/details/89888822
-    chunkFilename: 'js/[name].[hash:8].js',
+    chunkFilename: 'js/[name].[chunkhash:8].js',
     publicPath: '/'
   },
 
