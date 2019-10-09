@@ -14,6 +14,12 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 module.exports = merge(webpackConfig, {
   mode: 'production',
   devtool: '#source-map',
+  output: {
+    path: path.resolve(__dirname, '../dist'),
+    filename: 'js/[name].[chunkhash:8].js',
+    // 关于chunk： https://blog.csdn.net/weixin_40851188/article/details/89888822
+    chunkFilename: 'js/[name].[chunkhash:8].js',
+  },
   optimization: {
     minimizer: [
       new UglifyJsPlugin({

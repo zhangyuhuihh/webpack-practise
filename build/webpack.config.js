@@ -1,7 +1,11 @@
 const path = require('path')
-
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 module.exports = {
   mode: 'development',
   entry: {
@@ -9,15 +13,14 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'js/[name].[chunkhash:8].js',
-    // 关于chunk： https://blog.csdn.net/weixin_40851188/article/details/89888822
-    chunkFilename: 'js/[name].[chunkhash:8].js',
+    filename: '[name].js',
     publicPath: '/'
   },
 
   resolve: {
     alias: {
-      vue$: 'vue/dist/vue.runtime.esm.js'
+      vue$: 'vue/dist/vue.runtime.esm.js',
+      '@': resolve('src')
     },
     extensions: ['.js', '.vue']
   },
