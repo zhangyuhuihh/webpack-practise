@@ -46,17 +46,7 @@ export default {
   created() {
     this.httpRequest().then(res => {
       this.options = res.data.map(v => {
-        if (v.type !== '2') {
-          // 非部门，有下级
-          return {
-            ...v,
-            [this.KeyValue.children]: []
-          }
-        } else {
-          return {
-            ...v
-          }
-        }
+        return this.addChildKey(v)
       })
     })
   },
@@ -84,16 +74,12 @@ export default {
       for (let i = 0; i < arr.length; i++) {
         if (i === 0) {
           const fn = () => {
-            return this.httpRequest({
-              id: ''
-            })
+            return this.httpRequest('')
           }
           tasks.push(fn)
         } else {
           const fn = () => {
-            return this.httpRequest({
-              id: arr[i - 1]
-            })
+            return this.httpRequest(arr[i - 1])
           }
           tasks.push(fn)
         }
@@ -105,7 +91,12 @@ export default {
       const childKey = this.KeyValue.children
       const recordValue = (results, value) => {
         if (results.length === 0) {
-          Array.prototype.push.apply(results, value.data)
+          Array.prototype.push.apply(
+            results,
+            value.data.map(v => {
+              return this.addChildKey(v)
+            })
+          )
         } else {
           const pid = value.data[0].pid || ''
           let currentOption = this.findCurrentOption(pid, results)
@@ -113,17 +104,7 @@ export default {
             currentOption[childKey] =
               value.data.length > 0 &&
               value.data.map(v => {
-                if (v.type !== '2') {
-                  // 非部门，有下级
-                  return {
-                    ...v,
-                    [childKey]: []
-                  }
-                } else {
-                  return {
-                    ...v
-                  }
-                }
+                return this.addChildKey(v)
               })
           }
         }
@@ -138,26 +119,29 @@ export default {
     handleItemChange(val) {
       const api = this.httpRequest
       const childKey = this.KeyValue.children
-      api({
-        id: _.last(val)
-      }).then(res => {
+      api(_.last(val)).then(res => {
         const currentOption = this.findCurrentOption(_.last(val), this.options)
         currentOption[childKey] =
           res.data.length > 0 &&
           res.data.map(v => {
-            if (v.type !== '2') {
-              // 非部门，有下级
-              return {
-                ...v,
-                [childKey]: []
-              }
-            } else {
-              return {
-                ...v
-              }
-            }
+            return this.addChildKey(v)
           })
       })
+    },
+
+    addChildKey(v) {
+      const childKey = this.KeyValue.children
+      if (v.type !== '2') {
+        // 非部门，有下级
+        return {
+          ...v,
+          [childKey]: []
+        }
+      } else {
+        return {
+          ...v
+        }
+      }
     },
 
     findCurrentOption(val, initArr) {
