@@ -91,6 +91,11 @@ export default {
       const childKey = this.KeyValue.children
       const recordValue = (results, value) => {
         if (results.length === 0) {
+          // 这里不能直接使用...来生成新数组的原因，
+          // 这里的result是按引用传递，也就是复制了一份地址给了里面的result
+          // 当改变里面的result,让其指向一个新的对象的时候，上面的参数里面的result还是指向之前的[]这个对象(所以这里使用result = [...value.data]是不行的)
+          // 所以这里只能修改里面的result指向的对象，及[]
+
           Array.prototype.push.apply(
             results,
             value.data.map(v => {
@@ -104,12 +109,13 @@ export default {
             currentOption[childKey] =
               value.data.length > 0 &&
               value.data.map(v => {
-                return this.addChildKey(v)
+                return this.addChildKey(v)  
               })
           }
         }
         return results
       }
+      // 在bind的时候，会绑定这个[]这个对象，及一个内存地址
       let pushValue = recordValue.bind(null, [])
       return tasks.reduce((promise, task) => {
         return promise.then(task).then(pushValue)
