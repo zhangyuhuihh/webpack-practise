@@ -115,7 +115,7 @@ module.exports = {
         use: [
           {
             loader: 'url-loader',
-            options: {
+            options: {     
               limit: 4096,
               fallback: {
                 loader: 'file-loader',
