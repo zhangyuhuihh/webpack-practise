@@ -21,11 +21,7 @@ const devWebpackConfig = merge(webpackConfig, {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        // 为什么这里需要json.stringfy
-        // https://segmentfault.com/q/1010000016988200
-        NODE_ENV: JSON.stringify('development')
-      }
+      'process.env.NODE_ENV': JSON.stringify('development')
     }),
     new FriendlyErrorsWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin()

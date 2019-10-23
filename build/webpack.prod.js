@@ -18,7 +18,7 @@ module.exports = merge(webpackConfig, {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].[chunkhash:8].js',
     // 关于chunk： https://blog.csdn.net/weixin_40851188/article/details/89888822
-    chunkFilename: 'js/[name].[chunkhash:8].js',
+    chunkFilename: 'js/[name].[chunkhash:8].js'
   },
   optimization: {
     minimizer: [
@@ -32,9 +32,14 @@ module.exports = merge(webpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
+      //'process.env': { 
+      // NODE_ENV: JSON.stringify('production')
+      //}
+      //不好，会overwrite整个process.env对象，破坏进程环境，导致破坏兼容性。
+
+      'process.env.NODE_ENV': JSON.stringify('production')
+      // 这样好，不会破坏完整进程
+      // https://segmentfault.com/q/1010000016988200
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html')
