@@ -54,7 +54,7 @@ module.exports = merge(webpackConfig, {
         preset: [
           'default',
           {
-            mergeLonghand: false,
+            mergeLonghand: false, // https://www.hongkiat.com/blog/css-shorthand-longhand-notations/
             cssDeclarationSorter: false
           }
         ]
