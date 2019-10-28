@@ -1,7 +1,7 @@
 <template>
   <div>
     <span>{{labelData}}</span>
-    <el-input :value="modelData" @active-change="handleFieldModelChange"></el-input>
+    <el-input :value="modelData" @input="handleFieldModelChange"></el-input>
   </div>
 </template>
 
