@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -56,6 +56,10 @@ module.exports = {
         ]
       },
       {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      },
+      {
         test: /\.(scss|sass)$/,
         use: [
           {
@@ -82,7 +86,8 @@ module.exports = {
             loader: 'url-loader', // 转成base-64 URL
             options: {
               limit: 4096,
-              fallback: { // 超出limit之后使用file-loader进行处理
+              fallback: {
+                // 超出limit之后使用file-loader进行处理
                 loader: 'file-loader',
                 options: {
                   name: 'img/[name].[hash:8].[ext]'
@@ -115,7 +120,7 @@ module.exports = {
         use: [
           {
             loader: 'url-loader',
-            options: {     
+            options: {
               limit: 4096,
               fallback: {
                 loader: 'file-loader',
@@ -129,7 +134,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new VueLoaderPlugin()
-  ]
+  plugins: [new VueLoaderPlugin()]
 }

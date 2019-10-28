@@ -9,6 +9,7 @@ module.exports = {
   ],
   plugins: [
     // 这个插件同时和vue-router的异步加载使用，可以避免把所有的文件都打包到一个js文件内
-    '@babel/plugin-syntax-dynamic-import'
+    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-proposal-class-properties'
   ]
 }

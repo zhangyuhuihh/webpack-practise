@@ -14,6 +14,10 @@ export default new VueRouter({
       path: '/test1',
       component: () => import('./views/test1')
     },
+    {
+      path: '/partComponent',
+      component: () => import('./views/part_component/index.vue')
+    }
     // {
     //   path: '*',
     //   redirect: '/Home'
