@@ -35,19 +35,7 @@ export default {
   components: {
     myDraggable
   },
-  props: {
-    currentEstate: {
-      type: String
-      // required: true
-    },
-    screenId: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {}
-  },
+
   computed: {
     ...mapState('partComponent', {
       bigScreenRatioWidth: state => state.bigScreenRatio.width,
@@ -56,7 +44,6 @@ export default {
     })
   },
 
-  mounted() {},
   methods: {
     ...mapMutations('partComponent', [
       'setBigScreenRatioWidth',

@@ -1,25 +1,18 @@
 import _ from 'lodash'
-
-const widgetFields = {
-  input(label) {
-    return {
-      type: 'FieldInput',
-      formModel: '',
-      label
-    }
-  },
-}
+import widgetFields from './widget_fields'
 
 /**
  * uuid: 前端唯一标识
  * dragPosition: 拖动位置信息
  * dragSize: 拖动大小信息
- * fields: 组件表单信息
+ * fields: 组件表单信息,
+ * styleFields: 组件样式信息
  */
 
 class Widget {
   constructor(constructorData) {
     this.uuid = constructorData.uuid
+    this.setDragPosition(constructorData)
   }
 
   setDragPosition(constructorData) {
@@ -66,9 +59,22 @@ class Widget {
         break
     }
   }
+
+  setStyleFields(constructorData, styleFields) {
+    switch (constructorData.type) {
+      case 'add':
+        this.styleFields = { ...styleFields }
+        break
+      case 'edit':
+        this.styleFields = _.mapValues(styleFields, (value, key) => {
+          return constructorData[key]
+        })
+        break
+    }
+  }
 }
 
-class testComponentOne extends Widget {
+class TestComponentOne extends Widget {
   static initSize = {
     width: 300,
     height: 300
@@ -76,21 +82,21 @@ class testComponentOne extends Widget {
   constructor(constructorData) {
     super(constructorData)
 
-    this.setDragPosition(constructorData)
+    this.componentKey = 'TestComponentOne'
 
     this.setDragSize(constructorData, {
-      width: testComponentOne.initSize.width,
-      height: testComponentOne.initSize.height
+      width: TestComponentOne.initSize.width,
+      height: TestComponentOne.initSize.height
     })
 
     this.setFields(constructorData, {
-      url: widgetFields.input('链接'), // 每条数据皆为对象
-      ip: widgetFields.input('地址')
+      url: widgetFields.FieldInput('链接'), // 每条数据皆为对象
+      ip: widgetFields.FieldInput('地址')
     })
   }
 }
 
-class testComponentTwo extends Widget {
+class TestComponentTwo extends Widget {
   static initSize = {
     width: 200,
     height: 500
@@ -98,17 +104,18 @@ class testComponentTwo extends Widget {
   constructor(constructorData) {
     super(constructorData)
 
-    this.setDragPosition(constructorData)
+    this.componentKey = 'TestComponentTwo'
 
     this.setDragSize(constructorData, {
-      width: testComponentTwo.initSize.width,
-      height: testComponentTwo.initSize.height
+      width: TestComponentTwo.initSize.width,
+      height: TestComponentTwo.initSize.height
     })
 
-    this.setFields(constructorData, {
-      title: widgetFields.input('标题名称')
+    this.setStyleFields(constructorData, {
+      color: widgetFields.FieldColorPicker(),
+      fontSize: widgetFields.FieldSelect('请选择字体大小', ['12px', '20px', '30px'])
     })
   }
 }
 
-export { testComponentOne, testComponentTwo }
+export { TestComponentOne, TestComponentTwo }

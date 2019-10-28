@@ -3,6 +3,7 @@ const UPDATE_WIDGET_POS = 'UPDATE_WIDGET_POS'
 const UPDATE_WIDGET_SIZE = 'UPDATE_WIDGET_SIZE'
 const REMOVE_WIDGET = 'REMOVE_WIDGET'
 const SET_ACTIVEDWIDGET = 'SET_ACTIVEDWIDGET'
+const FIELDS_CHANGE = 'FIELDS_CHANGE'
 
 export default {
   namespaced: true,
@@ -65,6 +66,11 @@ export default {
       state.activedWidget = activeWidget
     },
 
+    [FIELDS_CHANGE]: (state, { uuid, fieldType, fieldKey, fieldValue }) => {
+      const widget = state.widgetList.find(v => v.uuid === uuid)
+      widget[fieldType][fieldKey].formModel = fieldValue
+    },
+
     setBigScreenRatioWidth: (state, width) => {
       state.bigScreenRatio.width = width
     },
@@ -101,6 +107,10 @@ export default {
 
     updateWidgetDragSize({ commit }, newDragSizeMsg) {
       commit('UPDATE_WIDGET_SIZE', newDragSizeMsg)
+    },
+
+    fieldsChange({ commit }, { uuid, fieldType, fieldKey, fieldValue }) {
+      commit('FIELDS_CHANGE', { uuid, fieldType, fieldKey, fieldValue })
     }
   }
 }

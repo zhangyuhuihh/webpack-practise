@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span>{{labelData}}</span>
-    <el-input :value="modelData" @active-change="handleFieldModelChange"></el-input>
+    <span>选择颜色</span>
+    <el-color-picker :value="modelData" @active-change="handleFieldModelChange"></el-color-picker>
   </div>
 </template>
 

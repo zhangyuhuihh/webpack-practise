@@ -22,10 +22,7 @@
         @resizestop="onResizeStop"
         @activated="onActivated(item)"
       >
-        <!-- @resizing="onResize" @dragging="onDrag"-->
-        <!-- <img :src="item.imgSrc" alt style="width:100%;height:100%" /> -->
-        <!-- <img v-if="dragData.key === 'special_title'" src="../../../assets/images/top_title_bg.png" alt="" style="width:100%;height:100%"> -->
-        <!-- <img v-else crossorigin="anonymous" :src="dragData.imgSrc+'?time=' + new Date().valueOf()" alt="" style="width:100%;height:100%"> -->
+      <component :is="item.componentKey" :uuid="item.uuid"></component>
       </vue-draggable-resizable>
     </template>
   </div>
@@ -34,8 +31,14 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
 import _ from 'lodash'
+import TestComponentOne from './testComponents/testComponentOne'
+import TestComponentTwo from './testComponents/testComponentTwo'
 export default {
   name: 'myDraggable',
+  components: {
+    TestComponentOne,
+    TestComponentTwo
+  },
   props: {},
   data() {
     return {

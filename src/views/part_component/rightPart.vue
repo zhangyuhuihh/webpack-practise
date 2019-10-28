@@ -1,13 +1,12 @@
 <template>
   <div class="right_container">
     <div>
-      <el-form :model="form" ref="mainForm" :rules="rules" label-width="120px">
-        <template v-for="(item, key) in form">
-          <el-form-item :key="key" :prop="`${key}.${key.formModel}`" :label="item.label">
-            <component :is="item.type"></component>
-          </el-form-item>
-        </template>
-      </el-form>
+      <template v-for="(item, key) in activedWidget.fields">
+        <component :is="item.type" :key="key" :field-key="key" :field-type="'fields'"></component>
+      </template>
+      <template v-for="(item, key) in activedWidget.styleFields">
+        <component :is="item.type" :key="key" :field-key="key" :field-type="'styleFields'"></component>
+      </template>
     </div>
   </div>
 </template>
@@ -15,32 +14,16 @@
 <script>
 import { mapState } from 'vuex'
 import FieldInput from './formFields/_field_input'
-import _ from 'lodash'
+import FieldColorPicker from './formFields/_field_color_picker'
+import FieldSelect from './formFields/_field_select'
 export default {
   components: {
-    FieldInput
-  },
-  data() {
-    return {
-      form: {},
-      rules: {}
-    }
+    FieldInput,
+    FieldColorPicker,
+    FieldSelect
   },
   computed: {
     ...mapState('partComponent', ['activedWidget'])
-  },
-  watch: {
-    activedWidget(newvalue) {
-      this.form = _.cloneDeep(newvalue.fields)
-    }
-  },
-  created() {
-    // this.form = obj.formKeys.reduce((all, next) => {
-    //   return {
-    //     ...all,
-    //     [next]: ''
-    //   }
-    // }, {})
   }
 }
 </script>

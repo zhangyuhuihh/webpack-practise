@@ -36,11 +36,11 @@ export default {
     background-color: red;
   }
   .middle_container {
-    flex: 8;
+    flex: 7;
     background-color: blue;
   }
   .right_container {
-    flex: 1;
+    flex: 2;
     background-color: yellow;
   }
 }
