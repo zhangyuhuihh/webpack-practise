@@ -20,7 +20,7 @@ const widgetFields = {
   FieldColorPicker() {
     return {
       type: 'FieldColorPicker',
-      formModel: ''
+      formModel: 'rgb(0, 0 , 0)'
     }
   }
 }

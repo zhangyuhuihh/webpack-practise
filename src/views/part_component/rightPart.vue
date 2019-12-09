@@ -2,10 +2,10 @@
   <div class="right_container">
     <div>
       <template v-for="(item, key) in activedWidget.fields">
-        <component :is="item.type" :key="key" :field-key="key" :field-type="'fields'"></component>
+        <component :is="item.type" :key="key + activedWidget.uuid" :field-key="key" :field-type="'fields'"></component>
       </template>
       <template v-for="(item, key) in activedWidget.styleFields">
-        <component :is="item.type" :key="key" :field-key="key" :field-type="'styleFields'"></component>
+        <component :is="item.type" :key="key + activedWidget.uuid" :field-key="key" :field-type="'styleFields'"></component>
       </template>
     </div>
   </div>
